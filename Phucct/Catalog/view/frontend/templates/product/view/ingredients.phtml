@@ -1,0 +1,17 @@
+<?php
+/** @var \Magento\Catalog\Block\Product\View $block*/
+
+$_product = $block->getProduct();
+if (!$_product instanceof \Magento\Catalog\Model\Product) {
+    return;
+}
+$ingredients = $_product->getIngredients();
+if ($ingredients) {
+    $ingredients = explode(',', $ingredients);
+    $attribute = $_product->getResource()->getAttribute('ingredients');
+    foreach ($ingredients as $optionId) {
+        if ($attribute->usesSource()) {
+            echo '<p>' .$block->escapeHtml($attribute->getSource()->getOptionText($optionId)). '</p>';
+        }
+    }
+}
